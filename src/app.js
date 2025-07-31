@@ -1,6 +1,5 @@
 const express = require("express");
 const jokeRoutes = require("./routes/jokeRoutes");
-// 76561198918812796
 
 const app = express();
 app.use(express.json());

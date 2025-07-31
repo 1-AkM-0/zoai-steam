@@ -1,13 +1,16 @@
-const { default: axios } = require("axios");
-const SteamServices = require("../services/steamServices");
+const { jokeOrganizer } = require("../utils/jokeOrganizer");
 
 const postJoke = async (req, res) => {
   const { steamId } = req.body;
-  const player = await SteamServices.getPlayerNickname(steamId);
-  const mostPlayed = await SteamServices.getMostPlayedGames(steamId);
-  const urls = SteamServices.getUrls(mostPlayed);
-  const gameNames = await SteamServices.getGameNames(urls);
-  res.json({ mostPlayed, gameNames, player });
+  if (!steamId) {
+    return res.status(400).json({ message: "No steam id" });
+  }
+  try {
+    const joke = await jokeOrganizer(steamId);
+    res.json({ joke });
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+  }
 };
 
 module.exports = { postJoke };
