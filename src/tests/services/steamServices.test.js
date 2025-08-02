@@ -3,6 +3,11 @@ const { steamApi } = require("../../clients/steamApi");
 const SteamServices = require("../../services/steamServices");
 
 const id = 1;
+const urls_test = [
+  "https://store.steampowered.com/api/appdetails?appids=730",
+  "https://store.steampowered.com/api/appdetails?appids=105600",
+  "https://store.steampowered.com/api/appdetails?appids=72850",
+];
 
 const resultOfMostPlayedGames = {
   data: {
@@ -23,7 +28,7 @@ const resultOfGetPlayerNickname = {
   data: { response: { players: [{ personaname: "Akmdd" }] } },
 };
 
-test("mock mostPlayedGames", async () => {
+test("Mock mostPlayedGames", async () => {
   jest.spyOn(steamApi, "get").mockReturnValueOnce(resultOfMostPlayedGames);
 
   const result = await SteamServices.getMostPlayedGames(id);
@@ -37,11 +42,51 @@ test("mock mostPlayedGames", async () => {
   ]);
 });
 
-test("mock getPlayerNickname", async () => {
+test("Mock getPlayerNickname", async () => {
   jest.spyOn(steamApi, "get").mockReturnValueOnce(resultOfGetPlayerNickname);
 
   const nickname = await SteamServices.getPlayerNickname(id);
 
   console.log(nickname);
   expect(nickname).toBe("Akmdd");
+});
+
+test("Get urls", () => {
+  const urls = SteamServices.getUrls([
+    { appid: 730, playtime: 137663 },
+    { appid: 105600, playtime: 9677 },
+    { appid: 72850, playtime: 6821 },
+  ]);
+
+  expect(urls).toEqual([
+    "https://store.steampowered.com/api/appdetails?appids=730",
+    "https://store.steampowered.com/api/appdetails?appids=105600",
+    "https://store.steampowered.com/api/appdetails?appids=72850",
+  ]);
+});
+
+test("Mock getGameNames", async () => {
+  jest.spyOn(axios, "get").mockImplementation((url) => {
+    if (url.includes("730")) {
+      return Promise.resolve({
+        data: { 730: { data: { name: "Counter-Strike 2" } } },
+      });
+    } else if (url.includes("105600"))
+      return Promise.resolve({
+        data: { 105600: { data: { name: "Terraria" } } },
+      });
+    else if (url.includes("72850")) {
+      return Promise.resolve({
+        data: { 72850: { data: { name: "The Elder Scrolls V: Skyrim" } } },
+      });
+    }
+  });
+
+  const result = await SteamServices.getGameNames(urls_test);
+
+  expect(result).toEqual([
+    "Counter-Strike 2",
+    "Terraria",
+    "The Elder Scrolls V: Skyrim",
+  ]);
 });
