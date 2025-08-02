@@ -1,10 +1,12 @@
-const axios = require("axios");
+const { default: axios } = require("axios");
+const { steamApi } = require("../clients/steamApi");
+
 require("dotenv").config();
 
 class SteamServices {
   static getPlayerNickname = async (steamId) => {
-    const response = await axios.get(
-      `http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${steamId}`
+    const response = await steamApi.get(
+      `/ISteamUser/GetPlayerSummaries/v0002/?key=${process.env.STEAM_API_KEY}&steamids=${steamId}`
     );
     const player = response.data.response.players[0].personaname;
 
@@ -12,8 +14,8 @@ class SteamServices {
   };
 
   static getMostPlayedGames = async (steamId) => {
-    const response = await axios.get(
-      `http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamId}&format=json`
+    const response = await steamApi.get(
+      `/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamId}&format=json`
     );
     const games = [];
     response.data.response.games.forEach((element) => {
