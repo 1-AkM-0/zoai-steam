@@ -53,7 +53,6 @@ class SteamServices {
       response.data[`${Object.keys(response.data).toString()}`].data.name;
 
     const promiseArray = urls.map(fetchUrl);
-    console.log(promiseArray);
 
     gameNames = (await Promise.all(promiseArray)).map(getNames);
     return gameNames;

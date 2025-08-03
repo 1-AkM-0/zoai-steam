@@ -24,15 +24,11 @@ const resultOfMostPlayedGames = {
   },
 };
 
-const resultOfGetPlayerNickname = {
-  data: { response: { players: [{ personaname: "Akmdd" }] } },
-};
-
 test("Mock mostPlayedGames", async () => {
-  jest.spyOn(steamApi, "get").mockReturnValueOnce(resultOfMostPlayedGames);
+  jest.spyOn(steamApi, "get").mockResolvedValueOnce(resultOfMostPlayedGames);
 
   const result = await SteamServices.getMostPlayedGames(id);
-  console.log(result);
+
   expect(result).toEqual([
     { appid: 730, playtime: 137663 },
     { appid: 105600, playtime: 9677 },
@@ -43,11 +39,12 @@ test("Mock mostPlayedGames", async () => {
 });
 
 test("Mock getPlayerNickname", async () => {
-  jest.spyOn(steamApi, "get").mockReturnValueOnce(resultOfGetPlayerNickname);
+  jest.spyOn(steamApi, "get").mockResolvedValueOnce({
+    data: { response: { players: [{ personaname: "Akmdd" }] } },
+  });
 
   const nickname = await SteamServices.getPlayerNickname(id);
 
-  console.log(nickname);
   expect(nickname).toBe("Akmdd");
 });
 
