@@ -140,3 +140,4 @@ vite.config.ts.timestamp-*
 
 # ids
 ids.txt
+/src/generated/prisma
