@@ -9,6 +9,10 @@ jokeRouter.get(
   passport.authenticate("jwt", { session: false }),
   JokeController.getJokes
 );
-// jokeRouter.delete("/:jokeId", jokeController.deleteJoke);
+jokeRouter.delete(
+  "/:jokeId",
+  passport.authenticate("jwt", { session: false }),
+  JokeController.deleteJoke
+);
 
 module.exports = jokeRouter;
