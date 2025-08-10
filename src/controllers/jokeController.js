@@ -17,7 +17,6 @@ class JokeController {
 
   static getJokes = async (req, res) => {
     const { user } = req;
-    console.log(user);
     const jokes = await JokeServices.getJokes(user.id);
     res.json({ jokes });
   };
