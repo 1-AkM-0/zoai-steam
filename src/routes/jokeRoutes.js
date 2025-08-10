@@ -1,7 +1,9 @@
 const { Router } = require("express");
-const jokeController = require("../controllers/jokeController.js");
+const JokeController = require("../controllers/jokeController.js");
 const jokeRouter = Router();
 
-jokeRouter.post("/", jokeController.postJoke);
+jokeRouter.post("/", JokeController.postJoke);
+jokeRouter.get("/", JokeController.getJokes);
+// jokeRouter.delete("/:jokeId", jokeController.deleteJoke);
 
 module.exports = jokeRouter;
