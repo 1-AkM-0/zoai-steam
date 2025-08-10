@@ -1,7 +1,14 @@
 const { Router } = require("express");
-const jokeController = require("../controllers/jokeController.js");
+const JokeController = require("../controllers/jokeController.js");
+const passport = require("../config/passport.js");
 const jokeRouter = Router();
 
-jokeRouter.post("/", jokeController.postJoke);
+jokeRouter.post("/", JokeController.postJoke);
+jokeRouter.get(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  JokeController.getJokes
+);
+// jokeRouter.delete("/:jokeId", jokeController.deleteJoke);
 
 module.exports = jokeRouter;

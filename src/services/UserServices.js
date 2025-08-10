@@ -2,12 +2,17 @@ const prisma = require("../config/prisma");
 
 class UserServices {
   static findUserByUsername = async (username) => {
-    const user = await prisma.user.findFirst({ where: username });
+    const user = await prisma.user.findUnique({ where: { username } });
+    return user;
+  };
+
+  static findUserById = async (id) => {
+    const user = await prisma.user.findUnique({ where: { id } });
     return user;
   };
 
   static getUser = async (id) => {
-    const user = await prisma.user.findFirst({ where: id });
+    const user = await prisma.user.findFirst({ where: { id } });
     return user;
   };
 
