@@ -13,7 +13,7 @@ class AuthController {
       await TokenServices.insertToken(user.id, refreshToken);
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
-        secure: false,
+        secure: true,
         sameSite: "Lax",
         path: "/api",
         maxAge: 7 * 24 * 60 * 60 * 1000,

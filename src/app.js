@@ -8,8 +8,9 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://zoai-steam-front.vercel.app/",
+    origin: "https://zoai-steam-front.vercel.app",
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 app.use(cookieParser());
