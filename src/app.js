@@ -8,7 +8,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://zoai-steam-front.vercel.app",
+    origin: process.env.ORIGIN,
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })

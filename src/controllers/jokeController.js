@@ -1,15 +1,24 @@
 const JokeServices = require("../services/jokeServices");
+const { getSteamId } = require("../utils/getSteamId");
 const { jokeOrganizer } = require("../utils/jokeOrganizer");
 
 class JokeController {
   static postJoke = async (req, res) => {
-    const { steamId } = req.body;
-    if (!steamId) {
-      return res.status(400).json({ message: "No steam id" });
+    const { profileUrl } = req.body;
+    console.log(profileUrl);
+
+    const steamId = getSteamId(profileUrl);
+    console.log(steamId);
+
+    const isLoggin = req.user?.id;
+    console.log(isLoggin);
+    if (!profileUrl) {
+      return res.status(400).json({ message: "No profile sent" });
     }
+
     try {
       const joke = await jokeOrganizer(steamId);
-      // const joke = `"Olha só esse rapazinho aí, o cara tem 2000 horas de CS e ainda tá no prata II, deve ser a lenda do rush B sem cérebro! Terraria? Claramente um refugiado do Minecraft que não aguentou o tranco dos creepers. Skyrim com 500 horas e o cabra ainda tá fazendo side quest porque tem medo de encarar o Alduin, virou entregador de quest de fazendinha? Aim Labs é o maior cafajeste, treina 300 horas pra morrer pra um mlq de 12 anos no headshot aleatório. E Fallout New Vegas? Tá esperando a DLC da mãe dele trazer o jantar no quarto enquanto o joguinho roda. Esse aí é o combo definitivo do 'quero ser bom mas só tenho skill de farmar minério e chorar no deathmatch'!" 🤣`;
+      // const joke = "ss";
 
       res.json({ joke });
     } catch (error) {
