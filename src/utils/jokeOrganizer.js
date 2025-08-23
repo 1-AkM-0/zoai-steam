@@ -2,7 +2,6 @@ require("dotenv").config();
 const SteamServices = require("../services/steamServices");
 
 const { ai } = require("../clients/ai");
-const { saveLog } = require("./saveLog");
 
 const jokeOrganizer = async (steamId) => {
   const mostPlayed = await SteamServices.getMostPlayedGames(steamId);
@@ -23,7 +22,7 @@ const jokeOrganizer = async (steamId) => {
   const response = await ai.post("/chat/completions", payload);
   const result = response.data.choices[0].message.content;
   // const result = `🤣`;
-  // await saveLog(result, steamId);
+  
   return result;
 };
 
