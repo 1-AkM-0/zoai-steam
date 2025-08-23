@@ -5,14 +5,22 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 const app = express();
+const allowedOrigins = process.env.ORIGIN.split(",");
 
 app.use(
   cors({
-    origin: process.env.ORIGIN,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("NOT ALLOWED ORIGIN"));
+      }
+    },
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
