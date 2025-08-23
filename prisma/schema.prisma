@@ -25,8 +25,8 @@ model User{
 model Joke{
   id String @id @default(uuid())
   content String
-  author User @relation(fields: [authorId], references: [id])
-  authorId String
+  author User? @relation(fields: [authorId], references: [id])
+  authorId String?
   createdAt DateTime @default(now())
   favorite Favorite[]
 

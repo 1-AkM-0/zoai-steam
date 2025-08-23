@@ -5,6 +5,7 @@ const { ai } = require("../clients/ai");
 
 const jokeOrganizer = async (steamId) => {
   const mostPlayed = await SteamServices.getMostPlayedGames(steamId);
+  if (!mostPlayed) throw new Error("Games are on private mode");
   const urls = SteamServices.getUrls(mostPlayed);
   const gameNames = await SteamServices.getGameNames(urls);
   const payload = {
@@ -22,7 +23,7 @@ const jokeOrganizer = async (steamId) => {
   const response = await ai.post("/chat/completions", payload);
   const result = response.data.choices[0].message.content;
   // const result = `🤣`;
-  
+
   return result;
 };
 

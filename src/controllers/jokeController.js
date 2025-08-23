@@ -8,19 +8,17 @@ class JokeController {
     const { profileUrl } = req.body;
     console.log(profileUrl);
     const { user } = req;
-  
-    const steamId = getSteamId(profileUrl);
 
-    if (!profileUrl) {
-      return res.status(400).json({ message: "No profile sent" });
-    }
+    const steamId = getSteamId(profileUrl);
 
     try {
       const joke = await jokeOrganizer(steamId);
-      // const joke = "ss";
+      /* const joke = "ss"; */
       await saveLog(user, joke, steamId);
+      await JokeServices.saveJoke(joke, user?.id);
       return res.json({ joke });
     } catch (error) {
+      console.log("to aqui", error);
       return res.status(500).json({ error: error });
     }
   };

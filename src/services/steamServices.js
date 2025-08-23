@@ -17,6 +17,10 @@ class SteamServices {
     const response = await steamApi.get(
       `/IPlayerService/GetOwnedGames/v0001/?key=${process.env.STEAM_API_KEY}&steamid=${steamId}&format=json`
     );
+
+    if (Object.keys(response.data.response).length === 0) {
+      return;
+    }
     const games = [];
     response.data.response.games.forEach((element) => {
       games.push({

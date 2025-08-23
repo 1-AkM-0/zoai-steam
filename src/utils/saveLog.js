@@ -1,21 +1,24 @@
 const Log = require("../models/log");
-const { default: mongoose } = require("../clients/mongo");
-
+const { default: mongoose, connect } = require("../clients/mongo");
 const saveLog = async (user, result, steamId) => {
-  console.log(user)
+  console.log(user);
   const log = new Log({
     steamId: steamId,
     joke: result,
+    createdAt: new Date(),
   });
   if (user) {
     log.user = user.id;
   }
 
-  console.log(log)
+  console.log(log);
 
-  await log.save();
+  try {
+    await connect();
+    await log.save();
+  } catch (e) {
+    console.log("error saving log");
+  }
   console.log("log salvo");
-  mongoose.connection.close();
 };
-
 module.exports = { saveLog };

@@ -1,11 +1,10 @@
 const getSteamId = (profileUrl) => {
-  const substring = "profiles";
-  const index = profileUrl.indexOf(substring);
+  const regex = /^https:\/\/steamcommunity\.com\/profiles\/([0-9]+)$/;
+  const match = regex.exec(profileUrl);
 
-  if (index !== -1) {
-    const steamId = profileUrl.slice(index + 9, profileUrl.length - 1);
-    console.log(steamId);
-    return steamId;
+  if (match) {
+    console.log(match[1]);
+    return match[1];
   }
 };
 

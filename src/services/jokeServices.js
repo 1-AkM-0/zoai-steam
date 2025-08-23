@@ -3,10 +3,7 @@ const prisma = require("../config/prisma");
 class JokeServices {
   static saveJoke = async (joke, authorId) => {
     await prisma.joke.create({
-      data: { content: joke },
-      where: {
-        authorId,
-      },
+      data: { content: joke, authorId: authorId },
     });
   };
 
