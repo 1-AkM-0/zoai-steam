@@ -1,10 +1,11 @@
 const Log = require("../models/log");
 const { default: mongoose, connect } = require("../clients/mongo");
-const saveLog = async (user, result, steamId) => {
-  console.log(user);
+const saveLog = async (user, result, steamId, model) => {
+  console.log(result);
   const log = new Log({
     steamId: steamId,
     joke: result,
+    model: model,
     createdAt: new Date(),
   });
   if (user) {
@@ -17,7 +18,7 @@ const saveLog = async (user, result, steamId) => {
     await connect();
     await log.save();
   } catch (e) {
-    console.log("error saving log");
+    console.log("error saving log:", e);
   }
   console.log("log salvo");
 };

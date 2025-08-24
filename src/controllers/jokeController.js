@@ -12,11 +12,12 @@ class JokeController {
     const steamId = getSteamId(profileUrl);
 
     try {
-      const joke = await jokeOrganizer(steamId);
+      const jokeObj = await jokeOrganizer(steamId);
+      const { joke, model } = jokeObj;
       /* const joke = "ss"; */
-      await saveLog(user, joke, steamId);
+      await saveLog(user, joke, steamId, model);
       await JokeServices.saveJoke(joke, user?.id);
-      return res.json({ joke });
+      return res.json({ joke: joke });
     } catch (error) {
       console.log("to aqui", error);
       return res.status(500).json({ error: error });
@@ -34,6 +35,11 @@ class JokeController {
   };
   static deleteJoke = async (req, res) => {
     const { jokeId } = req.params;
+    try {
+      await JokeServices.deleteJoke(jokeId);
+    } catch (e) {
+      return res.status(500).json({ error: e });
+    }
     res.status(204).json({ message: "joke deleted" });
   };
 }

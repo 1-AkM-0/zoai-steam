@@ -4,6 +4,7 @@ const logSchema = new mongoose.Schema({
   user: String,
   steamId: String,
   joke: String,
+  model: String,
   createdAt: Date,
 });
 
