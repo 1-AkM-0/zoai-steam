@@ -4,6 +4,9 @@ class TokenServices {
   static insertToken = async (userId, token) => {
     await prisma.token.create({ data: { token, authorId: userId } });
   };
+  static deleteToken = async (token) => {
+    await prisma.token.delete({ where: { token } });
+  };
 }
 
 module.exports = TokenServices;

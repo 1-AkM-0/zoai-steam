@@ -3,10 +3,8 @@ const jokeRoutes = require("./routes/jokeRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-
 const app = express();
 const allowedOrigins = process.env.ORIGIN.split(",");
-
 app.use(
   cors({
     origin: function (origin, callback) {
@@ -18,7 +16,7 @@ app.use(
     },
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 app.use(cookieParser());

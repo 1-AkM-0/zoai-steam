@@ -8,7 +8,7 @@ class genTokens {
         id: user.id,
       },
       process.env.ACCESS_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "15s" },
     );
   };
   static genRefreshToken = (user) => {
@@ -16,7 +16,7 @@ class genTokens {
       {
         id: user.id,
       },
-      process.env.REFRESH_SECRET
+      process.env.REFRESH_SECRET,
     );
   };
 }
