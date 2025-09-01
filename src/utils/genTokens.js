@@ -17,6 +17,7 @@ class genTokens {
         id: user.id,
       },
       process.env.REFRESH_SECRET,
+      { expiresIn: "7d" },
     );
   };
 }

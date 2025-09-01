@@ -19,7 +19,6 @@ class JokeController {
       await JokeServices.saveJoke(joke, user?.id);
       return res.json({ joke: joke });
     } catch (error) {
-      console.log("to aqui", error);
       return res.status(500).json({ error: error });
     }
   };
