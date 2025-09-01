@@ -5,6 +5,7 @@ class TokenServices {
     await prisma.token.create({ data: { token, authorId: userId } });
   };
   static deleteToken = async (token) => {
+    console.log(token);
     await prisma.token.delete({ where: { token } });
   };
 }

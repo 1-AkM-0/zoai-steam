@@ -14,8 +14,8 @@ class AuthController {
       res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         secure: true,
-        sameSite: "Lax",
-        path: "/api",
+        sameSite: "None",
+        path: "/",
         maxAge: 7 * 24 * 60 * 60 * 1000,
       });
 
@@ -26,10 +26,15 @@ class AuthController {
   };
 
   static logout = async (req, res) => {
-    const { refreshToken } = req.cookie;
+    const { refreshToken } = req.cookies;
     await TokenServices.deleteToken(refreshToken);
-    res.status(204).json({ Message: "Logout successfull" });
-    res.clearCookie("refreshToken", { path: "/api" });
+    res.clearCookie("refreshToken", {
+      path: "/",
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+    });
+    res.status(204);
   };
 
   static register = async (req, res) => {
