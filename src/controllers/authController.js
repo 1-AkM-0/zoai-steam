@@ -6,34 +6,19 @@ const bycript = require("bcryptjs");
 class AuthController {
   static login = async (req, res) => {
     const { user } = req;
-    console.log("to no login");
     const accessToken = genTokens.genAccessToken(user);
     const refreshToken = genTokens.genRefreshToken(user);
     try {
       await TokenServices.insertToken(user.id, refreshToken);
-      res.cookie("refreshToken", refreshToken, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "None",
-        path: "/",
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-      });
-
-      res.json({ username: user.username, accessToken });
+      res.json({ user: user.username, accessToken, refreshToken });
     } catch (error) {
       res.status(500).json({ Error: "Database Error" });
     }
   };
 
   static logout = async (req, res) => {
-    const { refreshToken } = req.cookies;
+    const { refreshToken } = req.body;
     await TokenServices.deleteToken(refreshToken);
-    res.clearCookie("refreshToken", {
-      path: "/",
-      httpOnly: true,
-      secure: true,
-      sameSite: "None",
-    });
     res.status(204);
   };
 

@@ -1,16 +1,13 @@
-const passport = require("../config/passport.js")
+const passport = require("../config/passport.js");
 
 const maybeAuth = (req, res, next) => {
-  passport.authenticate('jwt', { session: false }, (err, user, info) => {
+  passport.authenticate("jwt", { session: false }, (err, user) => {
     if (err || !user) {
-      console.log("aiai")
-      return next()
+      return next();
     }
-    req.user = user
-    next()
-  })(req, res, next)
-}
+    req.user = user;
+    next();
+  })(req, res, next);
+};
 
-
-
-module.exports = { maybeAuth }
+module.exports = { maybeAuth };
