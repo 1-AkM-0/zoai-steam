@@ -7,10 +7,12 @@ const {
   checkRules,
 } = require("../validators/validateProfile.js");
 const Authorization = require("../middlewares/authorization.js");
+const limiter = require("../middlewares/rateLimiter.js");
 const jokeRouter = Router();
 
 jokeRouter.post(
   "/",
+  limiter,
   validateProfile,
   checkRules,
   maybeAuth,
