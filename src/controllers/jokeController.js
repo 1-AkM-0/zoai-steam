@@ -14,12 +14,15 @@ class JokeController {
     try {
       const jokeObj = await jokeOrganizer(steamId);
       /* const jokeObj = { joke: "joke", model: "test" }; */
-      const { joke, model } = jokeObj;
+      const { joke, model, fromCache } = jokeObj;
+
       await saveLog(user, joke, steamId, model);
-      await JokeServices.saveJoke(joke, user?.id);
+
+      if (!fromCache) await JokeServices.saveJoke(joke, user?.id);
+
       return res.json({ joke: joke });
     } catch (error) {
-      console.log("to aqui", error);
+      console.log("Error", error);
       return res.status(500).json({ error: error });
     }
   };
