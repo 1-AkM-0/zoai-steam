@@ -142,3 +142,8 @@ vite.config.ts.timestamp-*
 # ids
 ids.txt
 /src/generated/prisma
+
+#docker
+mongo_data/
+redis_data/
+postgres_data/

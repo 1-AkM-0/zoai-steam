@@ -3,9 +3,9 @@ const getSteamId = (profileUrl) => {
   const match = regex.exec(profileUrl);
 
   if (match) {
-    console.log(match[1]);
     return match[1];
   }
+  return null;
 };
 
 module.exports = { getSteamId };

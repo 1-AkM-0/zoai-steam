@@ -35,7 +35,6 @@ passport.use(
     try {
       const user = await UserServices.findUserById(jwt_payload.id);
       if (user) {
-        console.log(user);
         return done(null, user);
       }
       return done(null, false);
