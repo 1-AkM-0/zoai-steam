@@ -8,7 +8,11 @@ app.use(express.json());
 app.use("/joke", joke);
 
 jest.mock("../../utils/jokeOrganizer", () => ({
-  jokeOrganizer: jest.fn().mockResolvedValue("Resposta da IA"),
+  jokeOrganizer: jest.fn().mockResolvedValue({
+    joke: "Resposta da IA",
+    model: "none",
+    fromCache: true,
+  }),
 }));
 
 jest.mock("../../services/steamServices", () => ({
@@ -26,13 +30,32 @@ jest.mock("../../services/steamServices", () => ({
     ]),
 }));
 
+jest.mock("../../services/jokeServices.js", () => ({
+  getJokes: jest.fn().mockResolvedValue([{ content: "Resposta da IA" }]),
+}));
+
+jest.mock("../../utils/saveLog.js", () => ({
+  saveLog: jest.fn().mockResolvedValue({}),
+}));
+
 describe("POST /joke but all mocked", function () {
   it("joke route works mocked", async () => {
-    const response = await request(app)
-      .post("/joke")
-      .send({ steamId: "76561197960435530" });
+    const response = await request(app).post("/joke").send({
+      profileUrl: "https://steamcommunity.com/profiles/76561197960435530",
+    });
 
     expect(response.body.joke).toEqual("Resposta da IA");
     expect(response.status).toEqual(200);
   });
 });
+
+/* describe("GET /joke mocked", function () {
+  it("get joke mocked", async () => {
+    const token = "my-fake-token";
+    const response = await request(app)
+      .get("/joke")
+      .set("Authorization", `Bearer ${token}`);
+    console.log(response.body);
+    expect(response.body.jokes[0].content).toEqual("Resposta da IA");
+  });
+}); */
