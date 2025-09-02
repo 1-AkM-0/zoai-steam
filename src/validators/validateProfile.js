@@ -9,7 +9,8 @@ const validateProfile = [
       const steamId = getSteamId(value);
       if (!steamId) return false;
       return true;
-    }),
+    })
+    .escape(),
 ];
 
 const checkRules = (req, res, next) => {
