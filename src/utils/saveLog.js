@@ -1,7 +1,6 @@
 const Log = require("../models/log");
 const { default: mongoose, connect } = require("../clients/mongo");
 const saveLog = async (user, result, steamId, model) => {
-  console.log(result);
   const log = new Log({
     steamId: steamId,
     joke: result,
@@ -12,7 +11,6 @@ const saveLog = async (user, result, steamId, model) => {
     log.user = user.id;
   }
 
-  console.log(log);
 
   try {
     await connect();

@@ -1,0 +1,6 @@
+node_modules/
+todo.js
+tt.js
+**/mongo_data/
+**/redis_data/
+**/postgres_data/

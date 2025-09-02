@@ -15,7 +15,6 @@ class JokeController {
       const jokeObj = await jokeOrganizer(steamId);
       /* const jokeObj = { joke: "joke", model: "test" }; */
       const { joke, model, fromCache } = jokeObj;
-
       await saveLog(user, joke, steamId, model);
 
       if (!fromCache) await JokeServices.saveJoke(joke, user?.id);

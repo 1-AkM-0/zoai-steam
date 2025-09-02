@@ -17,12 +17,15 @@ const sendJoke = async (gamesFormatted) => {
     ],
   };
 
-  const response = await ai.post("/chat/completions", payload);
-  const model = response.data.model;
-  const result = response.data.choices[0].message.content;
+  try {
+    const response = await ai.post("/chat/completions", payload);
+    const model = response.data.model;
+    const joke = response.data.choices[0].message.content;
+    return { joke, model };
+  } catch (e) {
+    throw new Error("Error calling AI", e);
+  }
   // const result = `🤣`;
-
-  return { joke: result, model };
 };
 
 module.exports = { sendJoke };
