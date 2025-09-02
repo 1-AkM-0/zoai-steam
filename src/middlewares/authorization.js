@@ -15,7 +15,7 @@ class Authorization {
     return res.status(401).json({ message: "Unauthorized" });
   };
   static authoRefresh = async (req, res, next) => {
-    const { refreshToken } = req.cookies;
+    const { refreshToken } = req.body;
     jwt.verify(refreshToken, process.env.REFRESH_SECRET, (err, usr) => {
       if (err)
         return res.status(403).json({ message: "Error on verification" });

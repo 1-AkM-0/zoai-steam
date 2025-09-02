@@ -14,7 +14,6 @@ passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
       const user = await UserServices.findUserByUsername(username);
-      console.log(user);
 
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
@@ -28,7 +27,7 @@ passport.use(
     } catch (error) {
       return done(error);
     }
-  })
+  }),
 );
 
 passport.use(
@@ -43,7 +42,7 @@ passport.use(
     } catch (error) {
       return done(error, null);
     }
-  })
+  }),
 );
 
 module.exports = passport;
