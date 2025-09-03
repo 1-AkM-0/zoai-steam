@@ -23,7 +23,7 @@ class JokeController {
     } catch (error) {
       console.log("Error", error);
 
-      return res.status(500).json({ error: error });
+      return res.status(500).json({ error: "Internal server error" });
     }
   };
 
