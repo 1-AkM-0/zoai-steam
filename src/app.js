@@ -47,7 +47,7 @@ const swaggerOptions = {
 };
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions);
-
+app.use("trust proxy", 1);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
