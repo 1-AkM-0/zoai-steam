@@ -12,7 +12,10 @@ const jokeOrganizer = async (steamId) => {
   }
 
   const mostPlayedGames = await SteamServices.getMostPlayedGames(steamId);
-  if (!mostPlayedGames) throw new Error("Games are on private mode");
+  if (!mostPlayedGames) {
+    throw new Error("Não foi possivel ver os jogos do usuario");
+  }
+
   const urls = SteamServices.getUrls(mostPlayedGames);
   const gameNames = await SteamServices.getGameNames(urls);
   const gamesFormatted = gamesFormatter(gameNames, mostPlayedGames);

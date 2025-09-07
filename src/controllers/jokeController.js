@@ -13,7 +13,6 @@ class JokeController {
 
     try {
       const jokeObj = await jokeOrganizer(steamId);
-      /* const jokeObj = { joke: "joke", model: "test" }; */
       const { joke, model, fromCache } = jokeObj;
       await saveLog(user, joke, steamId, model);
 
@@ -21,9 +20,9 @@ class JokeController {
 
       return res.json({ joke: joke });
     } catch (error) {
-      console.log("Error", error);
+      console.log("postJoke:", error);
 
-      return res.status(500).json({ error: "Internal server error" });
+      return res.status(500).json({ error: error.message });
     }
   };
 
@@ -33,7 +32,8 @@ class JokeController {
       const jokes = await JokeServices.getJokes(user.id);
       res.json({ jokes });
     } catch (error) {
-      res.status(500).json({ error: error });
+      console.log("getJokes error:", error);
+      res.status(500).json({ error: "Erro ao acessar histórico do usuario" });
     }
   };
   static deleteJoke = async (req, res) => {
@@ -41,7 +41,8 @@ class JokeController {
     try {
       await JokeServices.deleteJoke(jokeId);
     } catch (e) {
-      return res.status(500).json({ error: e });
+      console.log("deleteJoke error: ", e);
+      return res.status(500).json({ error: "Erro ao deletar joke" });
     }
     res.status(204).json({ message: "joke deleted" });
   };
