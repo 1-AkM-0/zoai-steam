@@ -12,7 +12,8 @@ class AuthController {
       await TokenServices.insertToken(user.id, refreshToken);
       res.json({ user: user.username, accessToken, refreshToken });
     } catch (error) {
-      res.status(500).json({ Error: "Database Error" });
+      console.log("Login error:", error);
+      res.status(500).json({ error: "Erro no banco de dados" });
     }
   };
 
@@ -28,7 +29,8 @@ class AuthController {
     try {
       UserServices.createUser(username, hashPassword);
     } catch (e) {
-      res.status(403).json({ Error: "Database Error" });
+      console.log("Error register: ", e);
+      res.status(403).json({ error: "Erro na criacao do usuario" });
     }
     res.json({ Message: "User created" });
   };

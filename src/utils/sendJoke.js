@@ -23,7 +23,8 @@ const sendJoke = async (gamesFormatted) => {
     const joke = response.data.choices[0].message.content;
     return { joke, model };
   } catch (e) {
-    throw new Error("Error calling AI", e);
+    console.log("Erro ao chamar IA:", e);
+    throw new Error("Falha ao gerar resposta por IA");
   }
   // const result = `🤣`;
 };
