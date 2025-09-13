@@ -105,7 +105,13 @@ Como existe um limite de 50 requisições por dia no plano free da Open Router, 
 - MongoDB(porta 27017)
 
 
+## Frontend
+
+Você pode encontrar o frontend da API aqui: [Frontend](https://github.com/1-AkM-0/zoai-steam-front)
+
+
 ## Próximos Passos
+- [ ] Tipos de respostas personalizadas
 - [ ] Adicionar opção de favoritar as respostas
 - [ ] Migrar para TypeScript
 - [ ] Melhorar logs e métricas
