@@ -4,7 +4,18 @@ const swaggerUi = require("swagger-ui-express");
 const jokeRoutes = require("./routes/jokeRoutes");
 const authRoutes = require("./routes/authRoutes");
 const cors = require("cors");
+const morgan = require("morgan");
+const path = require("path");
+const fs = require("fs");
+
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname, "access.log"),
+  { flags: "a" },
+);
+
 const app = express();
+app.use(morgan("combined", { stream: accessLogStream }));
+
 const allowedOrigins = process.env.ORIGIN.split(",");
 app.use(
   cors({
@@ -17,7 +28,7 @@ app.use(
     },
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 
 const swaggerOptions = {
